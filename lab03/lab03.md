@@ -29,7 +29,7 @@
 
 1) Создаём файл
 
-<img alt="img.png" height="300" src="img.png" width="490"/>
+<img alt="images/img.png" height="300" src="images/img.png" width="490"/>
 
 2) Запускаем сервер
 
