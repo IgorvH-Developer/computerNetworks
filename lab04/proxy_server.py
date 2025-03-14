@@ -1,3 +1,6 @@
+import os
+import time
+import hashlib
 import socket
 import threading
 from urllib.parse import urlparse, parse_qs
@@ -50,7 +53,7 @@ def transformRequest(request, host, method, url, protocol):
     return new_request, header_dict['Host']
 
 def proxy_server(client_socket, addr):
-    request = client_socket.recv(1024)
+    request = client_socket.recv(4096)
 
     # Парсим запрос
     first_line = request.decode().split('\n')[0]
@@ -65,24 +68,32 @@ def proxy_server(client_socket, addr):
         host = params['host'][0]
         url = host
 
-    new_request, new_host = transformRequest(request, host, "GET", url, protocol)
+    cache_dir = "cache/"
+    cached_file_path = os.path.join(cache_dir, hashlib.md5(url.encode()).hexdigest())
 
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.connect((new_host, 80))
+    if os.path.exists(cached_file_path):
+        with open(cached_file_path, 'rb') as cached_file:
+            response = cached_file.read()  # Читаем ответ из кеша
+        print(f"Serving from cache: {cached_file_path}")
+    else:
+        new_request, new_host = transformRequest(request, host, "GET", url, protocol)
 
-    server_socket.sendall(new_request.encode())
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_socket.connect((new_host, 80))
 
-    response = get_response(server_socket)
+        server_socket.sendall(new_request.encode())
 
-    resp_first_item = response.split(b"\r\n")[0]
-    print(f'Requested {new_host}, Response code: {resp_first_item}')
+        response = get_response(server_socket)
 
-    # Отправляем ответ клиенту
+        resp_first_item = response.split(b"\r\n")[0]
+        print(f'Requested {new_host}, Response code: {resp_first_item}')
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir)
+        with open(cached_file_path, 'wb') as cached_file:
+            cached_file.write(response)
     client_socket.sendall(response)
 
     client_socket.close()
-    server_socket.close()
-
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

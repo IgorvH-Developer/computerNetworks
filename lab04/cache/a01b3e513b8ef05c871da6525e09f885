@@ -1,0 +1,11 @@
+HTTP/1.1 204 No Content
+Content-Type: text/html; charset=windows-1251
+Content-Security-Policy: object-src 'none';base-uri 'self';script-src 'nonce-2YJf2Kjr2WTtMki0HV_A1w' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/xsrp
+P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+Date: Fri, 14 Mar 2025 07:29:35 GMT
+Server: gws
+Content-Length: 0
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: NID=522=fefgupQeolZCGa1hacrh-_rSX0EEeGVZiNnXt_WpqUtKE1zQrBevn0cru_We2UaXjHAfbbQuWs8xi33bj_irLR8Iyl8l_feP7yluY54lXwiMQETm9kg0_WM4aunFNAKjf8UzmvrkKq6FnnvApOwt9n5L3oSi63eYOMmZ5YWsPdr9w7dQw0KgeMjk4_HVRYGRoACCmkSKVQ; expires=Sat, 13-Sep-2025 07:29:35 GMT; path=/; domain=.google.com; HttpOnly
+
