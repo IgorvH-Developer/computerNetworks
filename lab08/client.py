@@ -53,7 +53,6 @@ def receive_file(save_path: str, server_addr: tuple):
 if __name__ == "__main__":
     server_address = ('localhost', 12345)
 
-    # Пример использования:
     # Отправка файла на сервер
     # send_file('alice.txt', server_address)
 

@@ -11,7 +11,7 @@ def start_server():
     rdt = StopWaitProtocol(sock)
 
     while True:
-        # Получение первого пакета (информация о файле или запрос)
+        # Получение первого пакета
         first_packet, addr = rdt.recv_packet()
 
         if first_packet == b'REQUEST_FILE':
